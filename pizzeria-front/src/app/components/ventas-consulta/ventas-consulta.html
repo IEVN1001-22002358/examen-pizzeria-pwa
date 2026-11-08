@@ -1,0 +1,49 @@
+<div class="bg-[#9bb8d3] border-4 border-yellow-400 p-4 rounded shadow-md h-full flex flex-col justify-between">
+  <fieldset class="border border-gray-500 p-3 bg-gray-300 flex-grow flex flex-col justify-between">
+    <legend class="text-xs font-semibold px-1 bg-gray-300">Ventas del día / mes</legend>
+
+    <div class="flex flex-wrap gap-2 mb-3 items-center text-xs">
+      <select [(ngModel)]="tipoFiltro" class="border border-gray-500 px-2 py-1 bg-white">
+        <option value="dia">Por Día de la semana</option>
+        <option value="mes">Por Mes</option>
+      </select>
+      <input type="text" [(ngModel)]="valorFiltro" 
+             [placeholder]="tipoFiltro === 'dia' ? 'Ej: lunes, martes...' : 'Ej: enero, noviembre...'"
+             class="border border-gray-500 px-2 py-1 bg-white flex-grow">
+    </div>
+
+    <div class="my-2 space-y-1 max-h-36 overflow-y-auto text-center">
+      <div *ngFor="let v of ventas" 
+           (click)="verDetalle(v)"
+           class="font-bold text-gray-900 cursor-pointer hover:underline text-base"
+           title="Haz clic para ver el desglose de pizzas de este pedido">
+        {{ v.nombre }} total ${{ v.total }}
+      </div>
+      <div *ngIf="ventas.length === 0" class="text-xs text-gray-600 italic">
+        No hay ventas registradas para este filtro.
+      </div>
+    </div>
+
+    <div *ngIf="ventaSeleccionada" class="bg-white border border-gray-400 p-2 my-2 text-xs rounded">
+      <div class="flex justify-between font-bold border-b pb-1 mb-1">
+        <span>Detalle de: {{ ventaSeleccionada.nombre }} ({{ ventaSeleccionada.fecha }})</span>
+        <button (click)="ventaSeleccionada = null" class="text-red-600 font-bold">✕</button>
+      </div>
+      <ul class="space-y-1">
+        <li *ngFor="let d of desgloseVenta">
+          • {{ d.num_pizzas }}x Pizza {{ d.tamano }} ({{ d.ingredientes }}) - <strong>${{ d.subtotal }}</strong>
+        </li>
+      </ul>
+    </div>
+
+    <div class="text-center font-bold text-lg mt-2">
+      Ventas totales del {{ tipoFiltro }}: ${{ totalAcumulado }}
+    </div>
+  </fieldset>
+
+  <div class="mt-3 text-center">
+    <button (click)="cargarVentas()" class="bg-gray-200 hover:bg-gray-300 border border-gray-500 px-8 py-1 text-xs font-medium shadow-sm w-3/4">
+      Ventas totales por {{ tipoFiltro }}
+    </button>
+  </div>
+</div>

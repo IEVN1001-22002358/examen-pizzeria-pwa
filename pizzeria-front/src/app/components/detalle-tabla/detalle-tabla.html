@@ -1,0 +1,43 @@
+<div class="bg-[#9bb8d3] border-4 border-black p-4 rounded shadow-md h-full flex flex-col justify-between">
+  
+  <div *ngIf="mensajeFlash" class="bg-green-100 border border-green-500 text-green-800 px-3 py-2 rounded mb-3 text-sm font-semibold">
+    {{ mensajeFlash }}
+  </div>
+
+  <div class="bg-gray-400 border border-gray-600 h-52 overflow-y-auto">
+    <table class="w-full text-left border-collapse text-sm bg-white">
+      <thead>
+        <tr class="bg-gray-100 border-b border-gray-400">
+          <th class="border-r border-gray-300 px-2 py-1 w-6"></th>
+          <th class="border-r border-gray-300 px-2 py-1">Tamaño</th>
+          <th class="border-r border-gray-300 px-2 py-1">Ingredientes</th>
+          <th class="border-r border-gray-300 px-2 py-1">Num. Pizzas</th>
+          <th class="px-2 py-1">SubTotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listaPizzas" 
+            (click)="seleccionarFila(item.id)"
+            [class.bg-blue-100]="idSeleccionado === item.id"
+            class="border-b border-gray-200 cursor-pointer hover:bg-gray-50">
+          <td class="border-r border-gray-300 px-2 py-1 text-center font-bold">
+            {{ idSeleccionado === item.id ? '▶' : '' }}
+          </td>
+          <td class="border-r border-gray-300 px-2 py-1">{{ item.tamano }}</td>
+          <td class="border-r border-gray-300 px-2 py-1">{{ item.ingredientes }}</td>
+          <td class="border-r border-gray-300 px-2 py-1">{{ item.num_pizzas }}</td>
+          <td class="px-2 py-1">${{ item.subtotal }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex justify-around mt-4">
+    <button (click)="quitar()" class="bg-gray-200 hover:bg-gray-300 border border-gray-500 px-6 py-1 text-sm font-medium shadow-sm">
+      Quitar
+    </button>
+    <button (click)="terminar()" class="bg-gray-200 hover:bg-gray-300 border border-gray-500 px-6 py-1 text-sm font-medium shadow-sm">
+      Terminar
+    </button>
+  </div>
+</div>

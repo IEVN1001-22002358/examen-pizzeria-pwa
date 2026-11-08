@@ -1,0 +1,9 @@
+# Entorno virtual de Python y caché
+backend_pizzeria/venv/
+**/__pycache__/
+*.pyc
+
+# Dependencias y caché de Angular
+pizzeria-front/node_modules/
+pizzeria-front/.angular/
+pizzeria-front/dist/
